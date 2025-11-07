@@ -92,7 +92,7 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
       // ✅ Successfully signed in!
       console.log("✅ Signed in successfully!");
       setActiveModal(null); // Close the dialog
-      window.location.href = "/dashboard"; // Redirect to dashboard
+      window.location.href = "/"; // Redirect to dashboard
     } catch (error: any) {
       setError(error.message || "Failed to sign in");
       console.error(error);

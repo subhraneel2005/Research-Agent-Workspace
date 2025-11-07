@@ -65,7 +65,7 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
         email: data.email,
         password: data.password,
         name: data.username,
-        callbackURL: "/dashboard", // Where to redirect after verification
+        callbackURL: "/", // Where to redirect after verification
       });
 
       if (response.error) {
