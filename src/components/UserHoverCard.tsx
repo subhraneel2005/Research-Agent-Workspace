@@ -11,8 +11,9 @@ import { VerifiedIcon, CalendarDays, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/useAuthStore";
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -22,34 +23,20 @@ interface User {
 }
 
 export function UserHoverCard() {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isLoading, setIsLoading, logout } = useAuthStore();
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const session = await authClient.getSession();
-        if (session?.data?.user) {
-          setUser(session?.data?.user as User);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   const handleLogout = async () => {
     try {
+      setIsLoading(true);
       await authClient.signOut();
+      logout();
       router.push("/");
       router.refresh();
     } catch (error) {
       console.error("Logout failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

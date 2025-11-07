@@ -17,6 +17,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { HelpCircle, Key } from "lucide-react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { useAuthStore } from "@/stores/useAuthStore";
+import ProfileLoadingSkeleton from "./ProfileLoadingSkeleton";
+import { useEffect } from "react";
 
 export const title = "Profile Edit Form";
 
@@ -27,35 +30,42 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  bio: z.string().max(160, {
-    message: "Bio must not exceed 160 characters.",
-  }),
-  website: z
-    .string()
-    .url({
-      message: "Please enter a valid URL.",
-    })
-    .optional()
-    .or(z.literal("")),
   googleGeminiKey: z.string().optional().or(z.literal("")),
   serperKey: z.string().optional().or(z.literal("")),
 });
 
 export default function ProfileSettings() {
+  const { user, isLoading } = useAuthStore();
+  const username = user?.name;
+  const email = user?.email;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "johndoe",
-      email: "john@example.com",
-      bio: "Software developer passionate about building great products.",
-      website: "https://johndoe.com",
+      username: "",
+      email: "",
       googleGeminiKey: "",
       serperKey: "",
     },
   });
 
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        username: user.name ?? "",
+        email: user.email ?? "",
+        googleGeminiKey: "",
+        serperKey: "",
+      });
+    }
+  }, [user, form]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+  }
+
+  if (isLoading) {
+    return <ProfileLoadingSkeleton />;
   }
 
   return (
@@ -226,48 +236,6 @@ export default function ProfileSettings() {
                 </FormControl>
                 <FormDescription>
                   Your email address is not publicly visible.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="bio"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bio</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="resize-none bg-background"
-                    placeholder="Tell us about yourself"
-                    rows={4}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {field.value?.length || 0}/160 characters
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website</FormLabel>
-                <FormControl>
-                  <Input
-                    className="bg-background"
-                    placeholder="https://example.com"
-                    type="url"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Your personal website or portfolio.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
