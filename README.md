@@ -5,13 +5,15 @@
   
    Agentic workspace for students and researchers to learn faster using AI
   
-  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
-  <img src="https://img.shields.io/badge/Vercel%20AI%20SDK-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel AI SDK" />
-  <img src="https://img.shields.io/badge/React_Hook_Form-333333?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React Hook Form" />
-  <img src="https://img.shields.io/badge/Zod-2B4A6F?style=for-the-badge&logo=zod&logoColor=white" alt="Zod" />
-  <img src="https://img.shields.io/badge/Resend-6F42C1?style=for-the-badge&logo=mailchimp&logoColor=white" alt="Resend" />
-  <img src="https://img.shields.io/badge/BetterAuth-0052CC?style=for-the-badge&logo=auth0&logoColor=white" alt="Better-Auth" />
-  <img src="https://img.shields.io/badge/Prisma-2F2F68?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
+  <img src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=flat" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white" alt="Vercel AI SDK" />
+    <img src="https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff" alt="Google Gemini" />
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=flat" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React%20Hook%20Form-EC5990?logo=reacthookform&logoColor=fff" alt="React Hook Form" />
+  <img src="https://img.shields.io/badge/Zod-2B4A6F?&style=flat&logo=zod&logoColor=white" alt="Zod" />
+  <img src="https://img.shields.io/badge/Resend-000?logo=resend&logoColor=fff&style=flat" alt="Resend" />
+  <img src="https://img.shields.io/badge/Better%20Auth-FFF?logo=betterauth&logoColor=000&style=flat" alt="Better-Auth" />
+  <img src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=flat" alt="Prisma" />
 </div>
 
 
@@ -42,10 +44,10 @@ Uses vector embeddings and semantic search for faster, context-aware responses.
 
 ```bash
 # Clone the repository
-git clone https://github.com/subhraneel2005/secure-agent-workspace
+git clone https://github.com/subhraneel2005/Research-Agent-Workspace.git
 
 # Install dependencies
-cd secure-agent-workspace
+cd Research-Agent-Workspace
 npm install
 
 # Start development server
