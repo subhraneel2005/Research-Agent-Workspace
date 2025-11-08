@@ -33,7 +33,7 @@ const PDFAgentNode = ({ data }: any) => {
 
   return (
     <Card className="w-96 shadow-md border-muted bg-card">
-      {!data.isLast && <Handle type="source" position={Position.Right} />}
+      {/* {!data.isLast && <Handle type="source" position={Position.Right} />} */}
 
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold">{data.label}</CardTitle>

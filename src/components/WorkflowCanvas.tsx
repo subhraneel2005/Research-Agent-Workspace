@@ -18,6 +18,7 @@ import WebSearchNode from "./WebSearchNode";
 import ReportGeneratorNode from "./ReportGeneratorNode";
 import EmptyState from "./EmptyMessage";
 import PDFAgentNode from "./PdfNode";
+import SummaryNode from "./SummaryNode";
 
 const initialNodes: any[] = [];
 
@@ -27,6 +28,7 @@ const nodeTypes = {
   agentNode: AgentNode,
   pdfNode: PDFAgentNode,
   webSearchNode: WebSearchNode,
+  summaryNode: SummaryNode,
   reportGeneratorNode: ReportGeneratorNode,
 };
 

@@ -8,8 +8,10 @@ import {
 } from "@/components/ai-elements/conversation";
 import {
   Message,
-  MessageAvatar,
+  MessageResponse,
   MessageContent,
+  MessageActions,
+  MessageAction,
 } from "@/components/ai-elements/message";
 
 import {
@@ -39,11 +41,13 @@ import {
   MessageSquare,
   PlusIcon,
   RefreshCcwIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
   X,
 } from "lucide-react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { Response } from "./ai-elements/response";
+// import { Response } from "./ai-elements/response";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { usePdfStore } from "@/stores/usePdfStore";
@@ -175,29 +179,23 @@ export default function ChatInterface() {
           ) : (
             messages.map((message) => (
               <>
-                <Message from={message.role} key={message.id}>
-                  <MessageContent>
+                <Message
+                  from={message.role}
+                  key={message.id}
+                  className="flex-1 flex-col"
+                >
+                  <MessageContent className="mt-6">
                     {message.parts.map((part, i) => {
                       switch (part.type) {
                         case "text":
                           return (
                             <div>
-                              <Response key={`${message.id}-${i}`}>
+                              <MessageResponse
+                                className=""
+                                key={`${message.id}-${i}`}
+                              >
                                 {part.text}
-                              </Response>
-                              <Actions className="mt-4">
-                                {actions.map((action) => (
-                                  <Action
-                                    variant={"secondary"}
-                                    size={"icon-sm"}
-                                    onClick={action.onClick}
-                                    key={action.label}
-                                    label={action.label}
-                                  >
-                                    <action.icon className="size-4" />
-                                  </Action>
-                                ))}
-                              </Actions>
+                              </MessageResponse>
                             </div>
                           );
                         case "reasoning":
@@ -250,7 +248,44 @@ export default function ChatInterface() {
                       }
                     })}
                   </MessageContent>
-                  <MessageAvatar name={message.role} src={message.role} />
+                  {message.role === "assistant" && (
+                    <MessageActions>
+                      <MessageAction
+                        label="Retry"
+                        onClick={() => regenerate()}
+                        tooltip="Regenerate response"
+                      >
+                        <RefreshCcwIcon className="size-4" />
+                      </MessageAction>
+                      <MessageAction
+                        label="Like"
+                        onClick={() => {}}
+                        tooltip="Like this response"
+                      >
+                        <ThumbsUpIcon
+                          className="size-4"
+                          // fill={liked[message.key] ? "currentColor" : "none"}
+                        />
+                      </MessageAction>
+                      <MessageAction
+                        label="Dislike"
+                        onClick={() => {}}
+                        tooltip="Dislike this response"
+                      >
+                        <ThumbsDownIcon
+                          className="size-4"
+                          // fill={disliked[message.key] ? "currentColor" : "none"}
+                        />
+                      </MessageAction>
+                      <MessageAction
+                        label="Copy"
+                        onClick={() => {}}
+                        tooltip="Copy to clipboard"
+                      >
+                        <CopyIcon className="size-4" />
+                      </MessageAction>
+                    </MessageActions>
+                  )}
                 </Message>
               </>
             ))
@@ -258,13 +293,12 @@ export default function ChatInterface() {
 
           {status === "submitted" && (
             <Message from="assistant">
-              <MessageContent>
+              <MessageContent className="mt-6">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Loader2 className="size-4 animate-spin" />
                   <span>Generating response...</span>
                 </div>
               </MessageContent>
-              <MessageAvatar name="assistant" src="assistant" />
             </Message>
           )}
         </ConversationContent>

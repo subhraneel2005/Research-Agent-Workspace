@@ -55,7 +55,7 @@ export function Sidebar() {
       name: "Summarizer Agent",
       description: "Summarizes long text or documents.",
       icon: <BookMarked className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
+      type: "summaryNode",
       defaultData: {
         label: "Summarizer Agent",
         description: "Summarizes long text or documents",

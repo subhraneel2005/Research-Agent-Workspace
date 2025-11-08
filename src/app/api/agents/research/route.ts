@@ -1,4 +1,3 @@
-// src/app/api/research/route.ts
 import { NextResponse } from "next/server";
 import { researchAgent, webSearchAgent } from "@/agents/researchAgent";
 import { convertToModelMessages } from "ai";
