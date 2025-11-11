@@ -16,19 +16,15 @@
   <img src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=flat" alt="Prisma" />
 </div>
 
-
-
 ## Features
 
 - **Web Search Agent** — Find and index academic articles and research papers
 - **Chat with PDF** — Upload PDFs and have natural-language conversations
-- **YouTube Lectures** — Extract transcripts and interact with video content
+- **YouTube Lectures** — Extract transcripts and interact with video content (Coming Soon)
 - **Summarizer** — Compress long content into concise summaries
 - **Notes Generator** — Produce structured, study-ready notes
 - **Flashcards** — Convert notes into spaced-repetition flashcards
 - **Export Tools** — Save notes to Notion, Google Drive, or local storage
-
-Uses vector embeddings and semantic search for faster, context-aware responses.
 
 ## Tech Stack
 
@@ -39,6 +35,30 @@ Uses vector embeddings and semantic search for faster, context-aware responses.
 - **Better-Auth** — Secure authentication
 - **Resend** — Email verification
 - **React Hook Form + Zod** — Form handling and validation
+
+---
+
+## Architectural Diagrams
+
+### Notes Generator Agent
+
+<div align="center">
+  <img src="/notes-gen.png" alt="Notes Generator Agent Architecture" width="700" />
+</div>
+
+**Overview:**
+The Notes Generator Agent is responsible for generating MDX-formatted, editable notes from multiple AI agent outputs (such as Chat-w-pdf, Flashcards, and Summarizer agents). It enables users to view, edit, autosave, and export notes seamlessly — much like editing a Notion document.
+
+**Key Highlights:**
+
+- Combines outputs from multiple agents (Chat-w-pdf, Flashcards, Summarizer).
+- Uses LLM to produce structured MDX-formatted notes.
+- Autosaves progress in the database for reliability.
+- Allows live editing with temporary saves in Zustand.
+- Supports exporting notes as PDF or saving to Google Drive/Notion.
+- Enables deletion and version control for note edits.
+
+---
 
 ## Getting Started
 
