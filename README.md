@@ -1,10 +1,11 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/subhraneel2005/genai-project-01/main/public/logo.png" alt="Research Agent Workspace" width="120" />
+  <!-- <img src="https://raw.githubusercontent.com/subhraneel2005/genai-project-01/main/public/logo.png" alt="Research Agent Workspace" width="120" /> -->
   
   # Research Agent Workspace
   
    Agentic workspace for students and researchers to learn faster using AI
-  
+   <br/>
+   <br/>
   <img src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=flat" alt="Next.js" />
   <img src="https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white" alt="Vercel AI SDK" />
     <img src="https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff" alt="Google Gemini" />
@@ -14,6 +15,11 @@
   <img src="https://img.shields.io/badge/Resend-000?logo=resend&logoColor=fff&style=flat" alt="Resend" />
   <img src="https://img.shields.io/badge/Better%20Auth-FFF?logo=betterauth&logoColor=000&style=flat" alt="Better-Auth" />
   <img src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=flat" alt="Prisma" />
+
+  <br />
+    <img src="https://github.com/subhraneel2005/Research-Agent-Workspace/blob/main/public/landing1.png?raw=true" alt="Landing page Banner" width="100%" />
+  <br />
+  
 </div>
 
 ## Features
