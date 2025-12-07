@@ -19,8 +19,10 @@ type SearchResult = {
   source?: string;
 };
 
+// TODO: fix any tyoe
+
 const WebSearchNode = ({ data }: any) => {
-  const [query, setQuery] = useState(data.query || "");
+  const [query, setQuery] = useState(data?.query || "");
   const [isSearching, setIsSearching] = useState(false);
   const [summary, setSummary] = useState("");
   const [sources, setSources] = useState<SearchResult[]>([]);
@@ -45,27 +47,19 @@ const WebSearchNode = ({ data }: any) => {
 
       const text = await response.text();
 
-      // Parse the "Summary:" and "Results:" sections safely
-      // Match Summary: <text> Results:
       const summaryMatch = text.match(/Summary:\s*([\s\S]*?)\nResults:/);
       const resultsMatch = text.match(/Results:\s*(\[[\s\S]*\])$/);
 
       const extractedSummary = summaryMatch ? summaryMatch[1].trim() : "";
       let parsedResults: SearchResult[] = [];
 
-      try {
-        if (resultsMatch) parsedResults = JSON.parse(resultsMatch[1]);
-      } catch (parseErr) {
-        console.error("Failed to parse JSON results:", parseErr);
-        throw new Error("Invalid results format from agent");
-      }
+      if (resultsMatch) parsedResults = JSON.parse(resultsMatch[1]);
 
       setSummary(extractedSummary);
       setSources(parsedResults);
 
-      data.onSearch?.(query, parsedResults);
-    } catch (err: any) {
-      console.error("Search error:", err);
+      data?.onSearch?.(query, parsedResults);
+    } catch {
       setError("Failed to fetch search results.");
     } finally {
       setIsSearching(false);
@@ -73,84 +67,77 @@ const WebSearchNode = ({ data }: any) => {
   };
 
   return (
-    <Card className="w-96 shadow-sm border-border border transition-all">
-      <Handle
-        type="source"
-        position={Position.Right}
-        className="!bg-slate-400"
-      />
-
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm flex items-center gap-2">
-          <Search className="h-4 w-4" />
-          {data.label || "Web Search"}
-        </CardTitle>
-        {data.description && (
-          <p className="text-xs text-muted-foreground mt-1">
-            {data.description}
+    <div className="w-96 md:w-[500px] bg-background border rounded-xl shadow-sm p-6 space-y-6">
+      {/* Title */}
+      <div>
+        <h2 className="text-lg font-semibold flex items-center gap-2">
+          <Search className="h-5 w-5" />
+          {data?.defaultData.label}
+        </h2>
+        {data?.description && (
+          <p className="text-sm text-muted-foreground mt-1">
+            {data?.defaultData.description}
           </p>
         )}
-      </CardHeader>
+      </div>
 
-      <CardContent className="space-y-3">
-        {/* Query Input */}
-        <div className="flex gap-2">
-          <Input
-            placeholder="Enter search query..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="text-sm"
-          />
-          <Button
-            size="sm"
-            onClick={handleSearch}
-            disabled={isSearching || !query.trim()}
-          >
-            {isSearching ? (
-              <div className="h-4 w-4 border-2 border-border border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <Search className="h-4 w-4" />
-            )}
-          </Button>
+      {/* Search Input */}
+      <div className="flex gap-2">
+        <Input
+          placeholder="Search the web..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          className="text-sm"
+        />
+        <Button
+          size="sm"
+          onClick={handleSearch}
+          disabled={isSearching || !query.trim()}
+        >
+          {isSearching ? (
+            <div className="h-4 w-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <Search className="h-4 w-4" />
+          )}
+        </Button>
+      </div>
+
+      {/* Status */}
+      {isSearching && (
+        <div className="text-sm text-muted-foreground flex items-center gap-2">
+          <div className="h-3 w-3 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+          Searching...
         </div>
+      )}
 
-        {/* Loading / Error */}
-        {isSearching && (
-          <div className="text-xs text-muted-foreground flex items-center gap-2">
-            <div className="h-3 w-3 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
-            Searching...
-          </div>
-        )}
+      {error && (
+        <p className="text-sm text-red-500 bg-red-50 p-3 rounded-lg border border-red-200">
+          {error}
+        </p>
+      )}
 
-        {error && (
-          <p className="text-xs text-red-500 bg-red-50 p-2 rounded-md">
-            {error}
-          </p>
-        )}
+      {/* Summary */}
+      {summary && (
+        <div className="bg-muted/40 p-4 rounded-lg border text-sm leading-relaxed">
+          <span className="font-semibold">Summary:</span> {summary}
+        </div>
+      )}
 
-        {/* Summary */}
-        {summary && (
-          <div className="p-2 text-xs rounded-md">
-            <strong>Summary:</strong> {summary}
-          </div>
-        )}
-
-        {/* Sources */}
-        {sources.length > 0 && (
-          <div className="pt-4">
-            <Sources>
-              <SourcesTrigger count={sources.length} />
-              <SourcesContent>
-                {sources.map((source, i) => (
-                  <Source key={i} href={source.url} title={source.title} />
-                ))}
-              </SourcesContent>
-            </Sources>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      {/* Sources */}
+      {sources.length > 0 && (
+        <div className="">
+          <Sources>
+            <SourcesTrigger count={sources.length} />
+            <SourcesContent>
+              {sources.map((source, i) => (
+                <Source key={i} href={source.url} title={source.title} />
+              ))}
+            </SourcesContent>
+          </Sources>
+        </div>
+      )}
+    </div>
   );
 };
 

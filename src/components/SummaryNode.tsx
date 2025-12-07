@@ -111,9 +111,11 @@ const SummaryNode = ({ data }: any) => {
   return (
     <Card className="w-[450px] shadow-md border-muted bg-card">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold">{data.label}</CardTitle>
+        <CardTitle className="text-base font-semibold">
+          {data?.defaultData.label}
+        </CardTitle>
         <CardDescription className="text-xs">
-          {data.description}
+          {data?.description}
         </CardDescription>
       </CardHeader>
 
@@ -222,6 +224,7 @@ const SummaryNode = ({ data }: any) => {
                           )}
                         </MessageContent>
                       );
+                    // TODO: fix type any
                     case "tool-result":
                       return (
                         <MessageResponse key={`${message.id}-${i}`}>

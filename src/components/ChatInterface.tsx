@@ -176,7 +176,7 @@ export default function ChatInterface() {
     <div className="bg-background border border-accent max-w-4xl mt-6 w-full px-4 py-4 rounded-2xl shadow-lg">
       {/* Conversation container */}
       <Conversation
-        className="relative w-full rounded-xl"
+        className="relative w-full rounded-xl overflow-y-hidden"
         style={{ height: "500px" }}
       >
         <ConversationContent>

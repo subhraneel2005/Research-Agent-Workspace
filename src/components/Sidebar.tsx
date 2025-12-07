@@ -20,10 +20,10 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { UserHoverCard } from "./UserHoverCard";
 import MinimapToggle from "./MinimapToggle";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { ScrollArea } from "./ui/scroll-area";
+import Link from "next/link";
 
 export function Sidebar() {
   const [open, setOpen] = useState(true);
@@ -34,6 +34,7 @@ export function Sidebar() {
       description: "Searches relevant research papers.",
       icon: <Search className="h-5 w-5 text-muted-foreground" />,
       type: "webSearchNode",
+      href: "/tools/webSearch",
       defaultData: {
         label: "Web Search Agent",
         description: "Searches the web for information",
@@ -46,6 +47,7 @@ export function Sidebar() {
       description: "Chat with your uploaded PDFs.",
       icon: <MessageSquare className="h-5 w-5 text-muted-foreground" />,
       type: "pdfNode",
+      href: "/tools/chatWithPDF",
       defaultData: {
         label: "Chat with PDF Agent",
         description: "Chat with your uploaded PDFs",
@@ -56,6 +58,7 @@ export function Sidebar() {
       description: "Summarizes long text or documents.",
       icon: <BookMarked className="h-5 w-5 text-muted-foreground" />,
       type: "summaryNode",
+      href: "/tools/summarizer",
       defaultData: {
         label: "Summarizer Agent",
         description: "Summarizes long text or documents",
@@ -66,6 +69,7 @@ export function Sidebar() {
       description: "Generates study flashcards automatically.",
       icon: <Notebook className="h-5 w-5 text-muted-foreground" />,
       type: "agentNode",
+      href: "/tools/flashcards",
       defaultData: {
         label: "Flashcards Generator Agent",
         description: "Generates study flashcards automatically",
@@ -76,6 +80,7 @@ export function Sidebar() {
       description: "Saves notes to Notion or exports as PDF.",
       icon: <FileText className="h-5 w-5 text-muted-foreground" />,
       type: "agentNode",
+      href: "/tools/saveNotes",
       defaultData: {
         label: "Save Notes Agent",
         description: "Saves notes to Notion or exports as PDF",
@@ -83,16 +88,16 @@ export function Sidebar() {
     },
   ];
 
-  const onDragStart = (event: React.DragEvent, agent: (typeof agents)[0]) => {
-    event.dataTransfer.setData(
-      "application/reactflow",
-      JSON.stringify({
-        type: agent.type,
-        data: agent.defaultData,
-      })
-    );
-    event.dataTransfer.effectAllowed = "move";
-  };
+  // const onDragStart = (event: React.DragEvent, agent: (typeof agents)[0]) => {
+  //   event.dataTransfer.setData(
+  //     "application/reactflow",
+  //     JSON.stringify({
+  //       type: agent.type,
+  //       data: agent.defaultData,
+  //     })
+  //   );
+  //   event.dataTransfer.effectAllowed = "move";
+  // };
 
   return (
     <Sheet modal={false} open={open} onOpenChange={setOpen}>
@@ -131,22 +136,23 @@ export function Sidebar() {
 
         <ScrollArea className="flex-1 h-96 px-4 py-5 space-y-4">
           {agents.map((agent, index) => (
-            <Card
-              key={index}
-              className="border border-border shadow-none cursor-grab active:cursor-grabbing my-4"
-              draggable
-              onDragStart={(e) => onDragStart(e, agent)}
-            >
-              <CardContent className="flex items-start gap-3">
-                <div className="flex-shrink-0">{agent.icon}</div>
-                <div>
-                  <h3 className="text-sm font-medium">{agent.name}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {agent.description}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <Link href={agent.href} key={index}>
+              <Card
+                className="border border-border shadow-none cursor-pointer my-4"
+                // draggable
+                // onDragStart={(e) => onDragStart(e, agent)}
+              >
+                <CardContent className="flex items-start gap-3">
+                  <div className="flex-shrink-0">{agent.icon}</div>
+                  <div>
+                    <h3 className="text-sm font-medium">{agent.name}</h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {agent.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </ScrollArea>
         <SheetFooter>
