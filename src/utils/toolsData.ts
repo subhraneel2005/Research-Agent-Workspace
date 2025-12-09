@@ -41,16 +41,6 @@ const toolsData = [
       description: "Generates study flashcards automatically",
     },
   },
-  {
-    name: "Save Notes Agent",
-    description: "Saves notes to Notion or exports as PDF.",
-    type: "agentNode",
-    href: "/tools/saveNotes",
-    defaultData: {
-      label: "Save Notes Agent",
-      description: "Saves notes to Notion or exports as PDF",
-    },
-  },
 ];
 
 export default toolsData;

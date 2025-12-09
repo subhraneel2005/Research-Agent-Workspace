@@ -1,4 +1,5 @@
 "use client";
+import FeaturesSection from "@/components/FeaturesScreen";
 import SigninScreen from "@/components/SignInScreen";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -40,6 +41,9 @@ export default function Home() {
       </div>
 
       <SigninScreen />
+
+      <div className="mt-[80px]"></div>
+      <FeaturesSection />
     </div>
   );
 }
