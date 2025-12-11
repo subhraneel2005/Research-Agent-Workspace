@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import NavWrapper from "@/clientWrapper/NavWrapper";
 import PageTransition from "@/clientWrapper/TransitionWrapper";
 import { ThemeProvider } from "next-themes";
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.className} antialiased`}>
+      <body className={`${GeistMono.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

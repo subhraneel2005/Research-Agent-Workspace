@@ -52,6 +52,7 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useChatStore } from "@/stores/useChatStore";
 import { usePdfDataStore } from "@/stores/usePdfDataStore";
+import EmptyPDFstate from "./EmptyPDFstate";
 
 async function convertFilesToDataURLs(
   files: FileList
@@ -84,12 +85,34 @@ async function convertFilesToDataURLs(
 }
 
 export default function ChatInterface() {
+  const [loading, setLoading] = useState(false);
+  const {
+    pdfUploaded,
+    setPdfUploaded,
+    pdfDataUrl,
+    pdfFile,
+    setPdfDataUrl,
+    pdfName,
+    setPdfFile,
+    setPdfName,
+  } = usePdfDataStore();
+
   const { messages, status, sendMessage, regenerate, stop } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
     }),
   });
 
+  const handleChange = () => {
+    setLoading(true);
+    try {
+      setPdfUploaded(!pdfUploaded);
+    } catch (error) {
+      console.log("Some error occured at handleChange pdfUploaded state");
+    } finally {
+      setLoading(false);
+    }
+  };
   const { addMessage, setMessages, removeExpiredChat } = useChatStore();
 
   useEffect(() => {
@@ -157,8 +180,6 @@ export default function ChatInterface() {
     },
   ];
 
-  const { pdfFile, pdfName, pdfDataUrl } = usePdfDataStore();
-
   useEffect(() => {
     if (pdfFile && pdfDataUrl) {
       setAttachments([
@@ -169,8 +190,13 @@ export default function ChatInterface() {
           file: pdfFile,
         },
       ]);
+      setPdfUploaded(true);
     }
   }, [pdfFile, pdfName, pdfDataUrl]);
+
+  if (!pdfUploaded) {
+    return <EmptyPDFstate handleChange={handleChange} />;
+  }
 
   return (
     <div className="bg-background border border-accent max-w-4xl mt-6 w-full px-4 py-4 rounded-2xl shadow-lg">
